@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Mahasiswa - Ilmu Komputer IPB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-50px) translateY(-50px); }
+            100% { transform: translateX(0px) translateY(0px); }
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #333;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #2E7D32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            border-radius: 2px;
+        }
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .bio-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .bio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .bio-card h3 {
+            color: #2E7D32;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .bio-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .ipb-logo {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .ipb-logo img {
+            width: 100px;
+            height: 100px;
+            opacity: 0.1;
+            transition: opacity 0.3s ease;
+        }
+
+        .ipb-logo:hover img {
+            opacity: 0.3;
+        }
+
+        .footer {
+            background: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle2 {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .circle3 {
+            width: 40px;
+            height: 40px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle circle1"></div>
+        <div class="floating-circle circle2"></div>
+        <div class="floating-circle circle3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-img">👨‍💻</div>
+            <h1>Raffi Putra Berlian</h1>
+            <p>Mahasiswa Ilmu Komputer/AI - IPB University</p>
+        </header>
+
+        <main class="main-content">
+            <section class="section">
+                <h2 class="section-title">📋 Biodata Diri</h2>
+                <div class="bio-grid">
+                    <div class="bio-card">
+                        <h3>🎓 Informasi Akademik</h3>
+                        <p><strong>NIM:</strong> M0405241056</p>
+                        <p><strong>Program Studi:</strong> Ilmu Komputer</p>
+                        <p><strong>Fakultas:</strong> Matematika dan Ilmu Pengetahuan Alam</p>
+                        <p><strong>Universitas:</strong> IPB University</p>
+                    </div>
+                    
+                    <div class="bio-card">
+                        <h3>👤 Informasi Personal</h3>
+                        <p><strong>Nama Proxy:</strong> </p>
+                        <p><strong>Asal Daerah:</strong> Jakarta Timur</p>
+                        <p><strong>Tahun Masuk:</strong> 2024</p>
+                        <p><strong>Status:</strong> Mahasiswa Aktif</p>
+                    </div>
+                    
+                    <div class="bio-card">
+                        <h3>🎯 Minat & Fokus</h3>
+                        <p><strong>Bidang Minat:</strong> Artificial Intelligence, Machine Learning, Web Development</p>
+                        <p><strong>Bahasa Pemrograman:</strong> Python, JavaScript, Java, C++</p>
+                    </div>
+                    
+                    <div class="bio-card">
+                        <h3>🏆 Prestasi & Aktivitas</h3>
+                        <p><strong>Organisasi:</strong> [Nama Organisasi]</p>
+                        <p><strong>Prestasi:</strong> [Prestasi yang pernah diraih]</p>
+                        <p><strong>Hobi:</strong> Coding, Reading, Gaming</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">💡 Tentang Saya</h2>
+                <div class="bio-card">
+                    <p>Halo! Saya adalah mahasiswa Ilmu Komputer di IPB University yang passionate dalam bidang teknologi, khususnya Artificial Intelligence dan Machine Learning. Saya selalu antusias untuk belajar hal-hal baru dan mengaplikasikan pengetahuan yang saya dapatkan dalam proyek-proyek nyata.</p>
+                    <br>
+                    <p>Selama berkuliah di IPB, saya aktif mengikuti berbagai kegiatan akademik dan non-akademik untuk mengembangkan soft skills dan hard skills. Saya percaya bahwa kombinasi antara pengetahuan teoritis dan pengalaman praktis akan membantu saya menjadi seorang computer scientist yang kompeten.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">🚀 Skills & Teknologi</h2>
+                <div class="skills-container">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">C++</span>
+                    <span class="skill-tag">HTML/CSS</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Data Science</span>
+                    <span class="skill-tag">Database</span>
+                    <span class="skill-tag">Git/GitHub</span>
+                    <span class="skill-tag">Linux</span>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">📞 Kontak & Social Media</h2>
+                <div class="contact-links">
+                    <a href="mailto:email@apps.ipb.ac.id" class="contact-link">
+                        📧 Email IPB
+                    </a>
+                    <a href="https://github.com/username" class="contact-link" target="_blank">
+                        💻 GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/username" class="contact-link" target="_blank">
+                        💼 LinkedIn
+                    </a>
+                    <a href="https://instagram.com/username" class="contact-link" target="_blank">
+                        📱 Instagram
+                    </a>
+                </div>
+            </section>
+
+            <div class="ipb-logo">
+                <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#2E7D32" opacity="0.1"/>
+                    <text x="50" y="35" text-anchor="middle" font-family="serif" font-size="20" font-weight="bold" fill="#2E7D32" opacity="0.3">IPB</text>
+                    <text x="50" y="55" text-anchor="middle" font-family="serif" font-size="8" fill="#2E7D32" opacity="0.3">UNIVERSITY</text>
+                    <text x="50" y="75" text-anchor="middle" font-family="serif" font-size="6" fill="#4CAF50" opacity="0.3">BOGOR</text>
+                </svg>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Profil Mahasiswa IPB University - Ilmu Komputer/AI</p>
+            <p>Dibuat dengan ❤️ untuk tugas HTML</p>
+        </footer>
+    </div>
+
+    <script>
+        // Animasi typing effect untuk title
+        const title = document.querySelector('.header h1');
+        const originalText = title.textContent;
+        title.textContent = '';
+        
+        function typeWriter(text, element, speed = 100) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+        
+        setTimeout(() => {
+            typeWriter(originalText, title, 150);
+        }, 1000);
+
+        // Animasi skill tags
+        document.querySelectorAll('.skill-tag').forEach((tag, index) => {
+            tag.style.animationDelay = `${index * 0.1}s`;
+            tag.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                }, 100);
+            });
+        });
+
+        // Parallax effect untuk floating circles
+        document.addEventListener('mousemove', (e) => {
+            const circles = document.querySelectorAll('.floating-circle');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            circles.forEach((circle, index) => {
+                const speed = (index + 1) * 0.5;
+                const xPos = (x - 0.5) * speed * 50;
+                const yPos = (y - 0.5) * speed * 50;
+                circle.style.transform = `translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+
+        // Smooth scrolling untuk navigasi
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
